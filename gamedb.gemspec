@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.version     = GameDb::VERSION
   s.platform    = Gem::Platform::RUBY
   s.summary     = "Support for data-driven game analysis."
-  s.description = "Database models and functionality for building and analyzing empirical gmes."
+  s.description = "Database models and functionality for building and analyzing empirical games."
   s.authors     = ["Ben Cassell"]
   s.email       = 'bcassell@umich.edu'
   s.homepage    = 'http://github.com/egtaonline/gamedb'

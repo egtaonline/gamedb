@@ -1,13 +1,9 @@
-GIT
-  remote: git://github.com/bcassell/sequel.git
-  revision: badb0871fa7eba96e5fa2ddc61eae7bdebc1601e
-  specs:
-    sequel (4.6.0)
-
 PATH
   remote: .
   specs:
     gamedb (0.0.1)
+      sequel
+      sequel_pg
 
 GEM
   remote: https://rubygems.org/
@@ -22,6 +18,10 @@ GEM
     rspec-expectations (2.14.4)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-mocks (2.14.4)
+    sequel (4.6.0)
+    sequel_pg (1.6.8)
+      pg (>= 0.8.0)
+      sequel (>= 3.39.0)
 
 PLATFORMS
   ruby
@@ -30,4 +30,3 @@ DEPENDENCIES
   gamedb!
   pg
   rspec
-  sequel!

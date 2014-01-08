@@ -11,6 +11,7 @@ describe GameGenerator do
         GameGenerator.build(roles)
         Profile.count.should == 6
         SymmetryGroup.count.should == 14
+        Player.count.should == 0
       end
       
       context 'and an integer number of observations' do
@@ -18,11 +19,13 @@ describe GameGenerator do
         it 'builds the correct number of Players as well' do
           GameGenerator.build(roles, observation_count)
           Profile.count.should == 6
+          Observation.count.should == 6*observation_count
           SymmetryGroup.count.should == 14
           Profile.all.each do |p|
             sgroup = SymmetryGroup.where(profile_id: p.id).first
             Player.where(symmetry_group_id: sgroup.id).count.should ==
                 sgroup.count * observation_count
+            sgroup.payoff.should == Player.where(symmetry_group_id: sgroup.id).avg(:payoff)
           end
         end
       end

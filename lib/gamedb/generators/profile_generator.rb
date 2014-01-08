@@ -1,17 +1,18 @@
 class ProfileGenerator
-  def self.build_profile(assignment)
-    profile = Profile.new
-    profile.save
-    assignment.each do |role|
-      role.uniq.each do |strategy|
-        symmetry_group = SymmetryGroup.new
-        symmetry_group.profile_id = profile.id
-        symmetry_group.role_id = strategy.role_id
-        symmetry_group.strategy_id = strategy.id
-        symmetry_group.count = role.count(strategy)
-        symmetry_group.save
+  def self.build_profiles(assignments)
+    profiles = []
+    sgroups = []
+    assignments.each do |assignment|
+      profile = Profile.new
+      profile.save
+      profiles << profile
+      assignment.each do |role|
+        role.uniq.each do |strategy|
+          sgroups << [profile.id, strategy.role_id, strategy.id, role.count(strategy)]
+        end
       end
     end
-    profile
+    DB[:symmetry_groups].import([:profile_id, :role_id, :strategy_id, :count], sgroups)
+    profiles
   end
 end

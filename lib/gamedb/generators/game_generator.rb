@@ -1,26 +1,18 @@
 class GameGenerator
-  def self.build(roles, observations = 0)
+  def self.build(roles)
     DB.transaction do
-      role_combinations = build_roles(roles)
-      assignments = role_combinations[0].product(*(role_combinations.drop(1)))
-      if observations > 0
-        profile_ids = ProfileGenerator.build_profiles(assignments)
-        observations = ObservationGenerator.build_for(profile_ids, observations)
-        PlayerGenerator.build_for(observations)
-      else
-        ProfileGenerator.build_profiles(assignments, true)
+      assignment_generator = AssignmentGenerator.new(roles)
+      assignments = assignment_generator.build_assignments
+      oa_assignments = assignment_generator.build_other_agents_assignments
+      rp_keys = roles.map do |k, v|
+        "#{k}:#{v[:player_count]}"
       end
+      rp_id = RolePartition
+        .find_or_create(role_partition: rp_keys.sort.join(','))
+        .role_partition_id
+      env_id = Environment.find_or_create(details: 'Default').environment_id
+      ProfileGenerator
+        .build_profiles(env_id, rp_id, assignments, oa_assignments)
     end
-  end
-
-  private
-
-  def self.build_roles(roles)
-    role_combinations = []
-    roles.each do |role|
-      strategy_array = RoleGenerator.build_role(role[:strategy_count])
-      role_combinations << strategy_array.repeated_combination(role[:player_count]).to_a
-    end
-    role_combinations
   end
 end

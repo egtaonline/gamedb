@@ -19,7 +19,7 @@ Sequel.migration do
 
     create_table(:o_agents_profiles) do
       primary_key :o_agents_profile_id
-      String :o_agents_profile, null: false
+      column :o_agents_profile, 'integer[]', null: false, unique: true
     end
 
     create_table(:environments) do
@@ -31,7 +31,7 @@ Sequel.migration do
       primary_key :profile_id
       foreign_key :environment_id
       foreign_key :role_partition_id
-      String :assignment, null: false
+      column :assignment, 'integer[]', null: false
       unique [:environment_id, :assignment]
       Integer :num_strategies, null: false
     end

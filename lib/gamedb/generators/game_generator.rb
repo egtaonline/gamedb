@@ -13,6 +13,8 @@ class GameGenerator
       env_id = Environment.find_or_create(details: 'Default').environment_id
       ProfileGenerator
         .build_profiles(env_id, rp_id, assignments, oa_assignments)
+      [env_id, rp_id]
     end
+    [nil, nil]
   end
 end

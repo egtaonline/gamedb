@@ -9,7 +9,7 @@ Sequel.migration do
       primary_key :strategy_id
       foreign_key :role_id, :roles
       String :strategy_name, null: false
-      unique [:role_id, :strategy_name]
+      # unique [:role_id, :strategy_name]
     end
 
     create_table(:role_partitions) do
@@ -19,7 +19,7 @@ Sequel.migration do
 
     create_table(:o_agents_profiles) do
       primary_key :o_agents_profile_id
-      column :o_agents_profile, 'integer[]', null: false, unique: true
+      column :o_agents_profile, 'integer[]', null: false #, unique: true
     end
 
     create_table(:environments) do
@@ -32,7 +32,7 @@ Sequel.migration do
       foreign_key :environment_id
       foreign_key :role_partition_id
       column :assignment, 'integer[]', null: false
-      unique [:environment_id, :assignment]
+      # unique [:environment_id, :assignment]
       Integer :num_strategies, null: false
     end
 
@@ -43,8 +43,8 @@ Sequel.migration do
       foreign_key :strategy_id
       Integer :num_players, null: false
       Float :payoff
-      unique [:profile_id, :strategy_id]
-      unique [:o_agents_profile_id, :strategy_id]
+      # unique [:profile_id, :strategy_id]
+      # unique [:o_agents_profile_id, :strategy_id]
     end
   end
 end

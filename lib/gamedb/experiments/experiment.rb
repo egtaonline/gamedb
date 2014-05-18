@@ -19,7 +19,10 @@ class Experiment
     methods.each do |method|
       iterations.times do
         time = method.time_cached
-# Create TRIAL entry here
+        Trial.create(run_at: Time.now, method: method.to_s,
+                     role_count: @role_count,
+                     strategies_per_role: @strategies_per_role,
+                     duration: time)
       end
     end
   end

@@ -1,13 +1,6 @@
-class StockGambit
-  include AbstractMethod
-
-  def initialize(file_name)
-    @file_name = file_name
-    @cached = false
-  end
-
+class StockGambit < AbstractGambit
   def execute
-    system("gambit-enumpure < #{@file_name} > stock_gambit_#{Time.now}.out")
+    `gambit-enumpure < #{@file_name}`
   end
 
   def ensure_cached
@@ -15,10 +8,5 @@ class StockGambit
       system("gambit-enumpure < #{@file_name}")
       @cached = true
     end
-  end
-
-  def uncache
-    @cached = false
-    super
   end
 end

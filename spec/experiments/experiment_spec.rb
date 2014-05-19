@@ -7,15 +7,9 @@ describe Experiment do
                         'R2' => { player_count: 2, strategies: %w(S3 S4) } }
       methods = []
       description = 'Test'
-      return_keys = [1, 1]
 
-      GameGenerator.should_receive(:build).with(profile_space)
-        .and_return(return_keys)
-      GambitGameWriter.should_receive(:write).with(profile_space, *return_keys)
-        .and_return('fake/path')
-
-      experiment = Experiment.new(methods, profile_space, description)
-
+      experiment = Experiment.new(methods, profile_space, description,
+                                  'fake/path')
       expect(experiment.description).to eq(description)
       expect(experiment.role_count).to eq(2)
       expect(experiment.strategies_per_role).to eq(2)

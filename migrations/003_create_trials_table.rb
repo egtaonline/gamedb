@@ -6,7 +6,7 @@ Sequel.migration do
       String :method, null: false
       Integer :role_count, null: false
       Integer :strategies_per_role, null: false
-      Time :duration, null: false
+      Float :duration, null: false
       String :comments
     end
   end

@@ -1,6 +1,6 @@
 class GambitGameWriter
-  def self.write(profile_space, env_id, r_partition_id, out='output.nfg')
-    f = File.open(out, 'w')
+  def self.write(profile_space, gambit_file, env_id, r_partition_id)
+    f = File.open(gambit_file, 'w')
     f.write("NFG 1 R \"TRIAL GAME\"\n")
     role_string = profile_space.keys.map{ |r| "\"#{r}\"" }.join(' ')
     strategy_counts = profile_space.values.map{ |v| v[:strategies].count }
@@ -15,6 +15,7 @@ class GambitGameWriter
       WHERE environment_id = #{env_id}
       AND role_partition_id = #{r_partition_id}
       GROUP BY profile_id
-      ORDER BY array_agg(strategy_id ORDER BY role_id DESC)\" >> output.nfg")
+      ORDER BY array_agg(strategy_id ORDER BY role_id DESC)\" >> #{gambit_file}
+      ")
   end
 end

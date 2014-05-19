@@ -36,6 +36,9 @@ class Experiment
     DB.run("TRUNCATE TABLE roles CASCADE")
     DB.run("TRUNCATE TABLE role_partitions CASCADE")
     DB.run("TRUNCATE TABLE o_agents_profiles CASCADE")
+    DB.run("TRUNCATE TABLE profiles CASCADE")
+    DB.run("TRUNCATE TABLE symmetric_aggs CASCADE")
+    DB.run("TRUNCATE TABLE strategies CASCADE")
     @game_keys = GameGenerator.build(@profile_space)
   end
 

@@ -2,7 +2,9 @@ require 'spec_helper'
 
 class AbstractGambit
   def system(arg)
-    unless arg == 'echo $EXEC | sudo -u postgres /usr/local/pgsql/bin/pg_ctl stop -D /usr/local/pgsql/data' || arg == 'echo $EXEC | sudo -u postgres /usr/local/pgsql/bin/pg_ctl start -D /usr/local/pgsql/data -o "--config-file=/home/bcassell/DDGT/db_configs/maxing_out.conf"'
+    unless arg == 'echo $EXEC | sudo -u postgres /usr/local/pgsql/bin/pg_ctl stop -D /usr/local/pgsql/data' ||
+           arg == 'echo $EXEC | sudo -u postgres /usr/local/pgsql/bin/pg_ctl start -D /usr/local/pgsql/data -o "--config-file=/home/bcassell/DDGT/db_configs/maxing_out.conf"' ||
+           arg == 'echo $EXEC | sudo sh -c "sync; echo 3 > /proc/sys/vm/drop_caches"'
       super
     end
   end

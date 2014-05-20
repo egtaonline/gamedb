@@ -15,8 +15,11 @@ module AbstractMethod
 
   # Does this break the testing apparatus?
   def uncache
-    system('sync')
-    system('echo 3 > /proc/sys/vm/drop_caches')
+    DB.disconnect
+    system('echo $EXEC | sudo -u postgres /usr/local/pgsql/bin/pg_ctl stop -D /usr/local/pgsql/data')
+    system('echo $EXEC | sudo sh -c "sync; echo 3 > /proc/sys/vm/drop_caches"')
+    system('echo $EXEC | sudo -u postgres /usr/local/pgsql/bin/pg_ctl start -D /usr/local/pgsql/data -o "--config-file=/home/bcassell/DDGT/db_configs/maxing_out.conf"')
+    sleep 1
   end
 
   def to_s

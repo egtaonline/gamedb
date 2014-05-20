@@ -1,2 +1,3 @@
 .bundle
 bin/gambit-enumpure
+bin/output.nfg

@@ -16,7 +16,16 @@ methods << MyGambit.new(prefix + '/gambit-enumpure', gambit_file)
 profile_space = { 'R1' =>
                   { player_count: 1, strategies: (1..10).map { |i| "S#{i}" } },
                   'R2' =>
+                  { player_count: 1, strategies: (1..10).map { |i| "S#{i}" } },
+                  'R3' =>
+                  { player_count: 1, strategies: (1..10).map { |i| "S#{i}" } },
+                  'R4' =>
+                  { player_count: 1, strategies: (1..10).map { |i| "S#{i}" } },
+                  'R5' =>
+                  { player_count: 1, strategies: (1..10).map { |i| "S#{i}" } },
+                  'R6' =>
                   { player_count: 1, strategies: (1..10).map { |i| "S#{i}" } }
                 }
 experiment = Experiment.new(methods, profile_space, 'Test', gambit_file)
-experiment.run_cached_trials(3)
+experiment.run_cached_trials(100)
+experiment.run_uncached_trials(100)

@@ -7,6 +7,7 @@ class AbstractGambit
   end
 
   def time_cached
+    DB.disconnect
     system('echo $EXEC | sudo -u postgres /usr/local/pgsql/bin/pg_ctl stop -D /usr/local/pgsql/data')
     ensure_cached
     responses = execute.split("\n")
@@ -16,6 +17,7 @@ class AbstractGambit
   end
 
   def time_uncached
+    DB.disconnect
     system('echo $EXEC | sudo -u postgres /usr/local/pgsql/bin/pg_ctl stop -D /usr/local/pgsql/data')
     uncache
     responses = execute.split("\n")

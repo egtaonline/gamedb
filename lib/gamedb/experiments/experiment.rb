@@ -17,10 +17,11 @@ class Experiment
 
   def run_cached_trials(iterations)
     reset
-    @methods.each do |method|
-      iterations.times do
-        SymmetricAggregation.reseed_payoffs
-        GambitGameWriter.write(@profile_space, @gambit_file, *@game_keys)
+    iterations.times do
+      SymmetricAggregation.reseed_payoffs
+      DB.run('VACUUM FULL ANALYZE')
+      GambitGameWriter.write(@profile_space, @gambit_file, *@game_keys)
+      @methods.each do |method|
         time = method.time_cached
         Trial.create(run_at: Time.now, method: method.to_s,
                      role_count: @role_count,
@@ -44,10 +45,12 @@ class Experiment
 
   def run_uncached_trials(iterations)
     reset
-    @methods.each do |method|
-      iterations.times do
+    iterations.times do
+      SymmetricAggregation.reseed_payoffs
+      DB.run('VACUUM FULL ANALYZE')
+      GambitGameWriter.write(@profile_space, @gambit_file, *@game_keys)
+      @methods.each do |method|
         time = method.time_uncached
-        SymmetricAggregation.reseed_payoffs
         Trial.create(run_at: Time.now, method: method.to_s,
                      role_count: @role_count,
                      strategies_per_role: @strategies_per_role,

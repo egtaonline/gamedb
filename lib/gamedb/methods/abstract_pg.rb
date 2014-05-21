@@ -3,7 +3,6 @@ class AbstractPg
   include AbstractMethod
 
   def initialize
-    @cached = false
   end
 
   def execute
@@ -11,15 +10,7 @@ class AbstractPg
   end
 
   def ensure_cached
-    unless @cached
-      system(query)
-      @cached = true
-    end
-  end
-
-  def uncache
-    @cached = false
-    super
+    system(query)
   end
 
   def query

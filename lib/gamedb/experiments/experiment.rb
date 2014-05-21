@@ -19,6 +19,7 @@ class Experiment
     reset
     iterations.times do
       SymmetricAggregation.reseed_payoffs
+      DB.disconnect
       system("psql -d #{DB_NAME} -c \"VACUUM FULL ANALYZE\"")
       GambitGameWriter.write(@profile_space, @gambit_file, *@game_keys)
       @methods.each do |method|
@@ -47,6 +48,7 @@ class Experiment
     reset
     iterations.times do
       SymmetricAggregation.reseed_payoffs
+      DB.disconnect
       system("psql -d #{DB_NAME} -c \"VACUUM FULL ANALYZE\"")
       GambitGameWriter.write(@profile_space, @gambit_file, *@game_keys)
       @methods.each do |method|

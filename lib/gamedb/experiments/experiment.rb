@@ -19,7 +19,7 @@ class Experiment
     reset
     iterations.times do
       SymmetricAggregation.reseed_payoffs
-      DB.run('VACUUM FULL ANALYZE')
+      system("psql -d #{DB_NAME} -c \"VACUUM FULL ANALYZE\"")
       GambitGameWriter.write(@profile_space, @gambit_file, *@game_keys)
       @methods.each do |method|
         time = method.time_cached
@@ -47,7 +47,7 @@ class Experiment
     reset
     iterations.times do
       SymmetricAggregation.reseed_payoffs
-      DB.run('VACUUM FULL ANALYZE')
+      system("psql -d #{DB_NAME} -c \"VACUUM FULL ANALYZE\"")
       GambitGameWriter.write(@profile_space, @gambit_file, *@game_keys)
       @methods.each do |method|
         time = method.time_uncached

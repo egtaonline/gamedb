@@ -16,11 +16,9 @@ class Experiment
   end
 
   def run_cached_trials(iterations)
-    reset
     iterations.times do
-      SymmetricAggregation.reseed_payoffs
       DB.disconnect
-      system("psql -d #{DB_NAME} -c \"VACUUM FULL ANALYZE\"")
+      reset
       GambitGameWriter.write(@profile_space, @gambit_file, *@game_keys)
       @methods.each do |method|
         time = method.time_cached
@@ -45,11 +43,9 @@ class Experiment
   end
 
   def run_uncached_trials(iterations)
-    reset
     iterations.times do
-      SymmetricAggregation.reseed_payoffs
       DB.disconnect
-      system("psql -d #{DB_NAME} -c \"VACUUM FULL ANALYZE\"")
+      reset
       GambitGameWriter.write(@profile_space, @gambit_file, *@game_keys)
       @methods.each do |method|
         time = method.time_uncached
